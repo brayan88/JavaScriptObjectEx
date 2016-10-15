@@ -2,30 +2,29 @@
  * Created by el on 15.10.2016 г..
  */
 function usernames(input) {
-    let catalogue = new Set();
+    let unique = new Set();
+    let newStr ="";
+    let arr=[];
     for (let i = 0; i < input.length; i++) {
-         catalogue.add(input[i]);
+        let currArr = JSON.parse(input[i]).sort((a,b)=>b-a).map(Number);
+        for (let j = 0; j < currArr.length; j++) {
+            let number = currArr[j];
+            if(j!=currArr.length-1)
+                newStr+=number+", ";
+            else
+                newStr+=number;
+        }
+        arr.push(newStr.trim());
+        newStr="";
     }
-    let catalogueArr=[...catalogue];
-    console.log(catalogueArr.sort(sortedViaLength).join("\n"));
-    function sortedViaLength(a,b) {
-        let result = a.length-b.length;
-        if(result===0)
-            return a.localeCompare(b)
-        return result;
-    }
+    arr.sort((a,b)=>a.length-b.length);
+    arr.forEach(x=>unique.add(x));
+    for(let el of unique)
+        console.log("["+el+"]")
+
 }
 usernames([
-    'Denise',
-    'Ignatius',
-    'Iris',
-    'Isacc',
-    'Indie',
-    'Dean',
-    'Donatello',
-    'Enfuego',
-    'Benjamin',
-    'Biser',
-    'Bounty',
-    'Renard',
-    'Rot'])
+     '[-3, -2, -1, 0, 1, 2, 3, 4]',
+     '[10, 1, -17, 0, 2, 13]',
+     '[4, -3, 3, -2, 2, -1, 1, 0]'
+]);
